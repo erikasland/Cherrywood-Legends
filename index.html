@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <audio src="./static/jackchandler.mp3" autoplay>  <!-- move to partials -->
+        <title>the_game</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src='./js/game.js'></script>
+        <link rel="stylesheet" type="text/css" href="./static/style.css">
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $('#start_game').click(function(){
+                $('#start_game').hide()
+                var new_game = new game('play1Castles', 'play1Char');
+                new_game.init()
+            })
+        })
+        </script>
+</audio>
+    </head>
+    <body>
+        <button id='start_game'>Start Game</button>
+        <div id='container'>
+            <div id='play1Castles' class='building'></div>
+        </div>
+        <div id='play2Castles' class='building'></div>
+        <div id='play1Char'></div>
+        <div id='play2Char'></div>
+    </body>
+</html>
