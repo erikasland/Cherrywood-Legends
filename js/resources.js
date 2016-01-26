@@ -1,61 +1,47 @@
-(function() {
-    var resourceCache = {};
-    var loading = [];
-    var readyCallbacks = [];
+var Game = {};
+Game.draw = function(){
+   loadField();
+}
+// Game.update = function(){
 
-    // Load an image url or an array of image urls
-    function load(urlOrArr) {
-        if(urlOrArr instanceof Array) {
-            urlOrArr.forEach(function(url) {
-                _load(url);
-            });
-        }
-        else {
-            _load(urlOrArr);
-        }
-    }
+//     $(document).on("keypress", function(e){
+//         if(e.which == 32){
+//             var x = 600;
+//             var y = 650;
+//             for(var i = 0; i <= 5; i++){
+//                 sprite.draw(i, x, y);
+               
+//             }
+//         }
+//     })
+//     //game logic goes here
+// }
 
-    function _load(url) {
-        if(resourceCache[url]) {
-            return resourceCache[url];
-        }
-        else {
-            var img = new Image();
-            img.onload = function() {
-                resourceCache[url] = img;
+while(!Game.stopped){
+    Game.draw();
+    Game.update();
+}
 
-                if(isReady()) {
-                    readyCallbacks.forEach(function(func) { func(); });
-                }
-            };
-            resourceCache[url] = false;
-            img.src = url;
-        }
-    }
+Game.fps = 50;
 
-    function get(url) {
-        return resourceCache[url];
-    }
+Game.run = (function() {
+    var loops = 0, skipTicks = 1000 / Game.fps,
+        maxFrameSkip = 10,
+        nextGameTick = (new Date).getTime();
 
-    function isReady() {
-        var ready = true;
-        for(var k in resourceCache) {
-            if(resourceCache.hasOwnProperty(k) &&
-               !resourceCache[k]) {
-                ready = false;
-            }
-        }
-        return ready;
-    }
+    return function() {
+      loops = 0;
 
-    function onReady(func) {
-        readyCallbacks.push(func);
-    }
+      while ((new Date).getTime() > nextGameTick) {
+        updateStats.update();
+        Game.update();
+        nextGameTick += skipTicks;
+        loops++;
+      }
 
-    window.resources = { 
-        load: load,
-        get: get,
-        onReady: onReady,
-        isReady: isReady
+      renderStats.update();
+      Game.draw();
     };
-})();
+  })();
+  
+  window.setInterval(Game.run, 0);
