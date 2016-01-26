@@ -3,9 +3,16 @@
     <head>
         <audio src="./static/jackchandler.mp3" autoplay>  <!-- move to partials -->
         <title>the_game</title>
+        <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <!-- Game.js file -->
         <script src='./js/game.js'></script>
+        <!-- resources -->
+        <script src = './js/resources.js'></script>
+        <!-- css -->
         <link rel="stylesheet" type="text/css" href="./static/style.css">
+
+
         <script type="text/javascript">
         $(document).ready(function(){
             $('#start_game').click(function(){
@@ -15,9 +22,12 @@
             })
         })
         </script>
+
 </audio>
     </head>
     <body>
+
+
         <button id='start_game'>Start Game</button>
         <div id='container'>
             <div id='play1Castles' class='building'></div>
