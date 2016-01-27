@@ -93,14 +93,24 @@ function drawCharacter() {
     // character_img.addEventListener('load', character_img_loaded , false);
     character_img.src = './static/link.png';
 
-    var positions = [[0,0], [35,0], [70,0], [105,0], [140,0], [175,0]];
+    var positions = {
 
+        'FIGHTING': [[0,0], [35,0], [70,0], [105,0], [140,0], [175,0]],
+        'WALK_LEFT': [[0,105], [35,105], [70,105]],
+        'WALK_BACK': [[105,105], [140,105],[175,105]],
+        'WALK_RIGHT': [[0,245], [35,245], [70,245]],
+        'WALK_DOWN': [[0,105], [35,105], [70,105]]
+    }
+    console.log(positions['FIGHTING'].length)
+    //dx is the width of the sprite aka what we use to increment the sx and sy coordinates
     var dx = 35;
     var dy = 0;
+    //starting point x and y coordinates on the sprite sheet
     var sx = 0;
     var sy = 0;
     var destX = 500;
     var destY = 650;
+    var count = 0;
 
     function character_img_loaded() {
 
@@ -112,10 +122,8 @@ function drawCharacter() {
 
     $(document).on("keypress", function(e){
         if(e.which == 32){
-            // oldDest = destX;
-            // destX = destX + 35;
             function fight(){
-                sy = sy+dy;
+                sy = 0;
                 sx = sx+dx;
                 if(sx == 210){
                     window.clearInterval(start_fight);
@@ -128,6 +136,75 @@ function drawCharacter() {
                 });
             }
            var start_fight = setInterval(fight, 50);
+        } 
+        if(e.which == 50){
+            console.log("hellooooooo")
+            function walk_left(){
+                sy = 105;
+                sx = sx + dx;
+                destX -= 15;
+                count++
+                if(count >= positions['WALK_LEFT'].length){
+                    window.clearInterval(start_walking);
+                    sx = 0;
+                }
+                reloadField(function() {
+
+                    ctx.drawImage(character_img, sx, sy, 35, 35,destX,destY,35,35);
+
+                });
+            }
+            var start_walking = setInterval(walk_left, 50);
+        }
+        if(e.which == 51){
+            function walk_back(){
+                count ++
+                sy = 105;
+                sx = 105 + dx;
+                // destX += 15;
+                destY -= 15;
+                if(count >= positions['WALK_BACK'].length){
+                    window.clearInterval(start_walking_again);
+                    sx = 0;
+                }
+                reloadField(function() {
+
+                    ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
+                });
+            }
+            var start_walking_again = setInterval(walk_back, 50);
+        }
+        if(e.which == 52){
+            function walk_right(){
+                count++;
+                sy = 215;
+                sx += dx ;
+                destX += 15;
+                if(count >= positions['WALK_RIGHT'].length){
+                    window.clearInterval(hit_the_road_jack);
+                    sx = 0;
+                }
+                reloadField(function(){
+                    ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
+                })
+            }
+            var hit_the_road_jack = setInterval(walk_right, 50);
+        }
+        if(e.which == 53){
+            function walk_down(){
+                count++;
+                sy = 105;
+                sx += dx ;
+                destY += 15;
+                if(count >= positions['WALK_DOWN'].length){
+                    window.clearInterval(walking_more);
+                    sx = 0;
+                }
+                reloadField(function(){
+                    ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
+                })
+            }
+            var walking_more = setInterval(walk_down, 50);
         }
     })
 
@@ -141,94 +218,6 @@ var constants = {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //draw the character
-// function drawCharacter(){
-//     var constants = {
-//         'WALKING': {
-//             'y': 3,
-//             'x': [0, 1, 2]
-//         }
-//     }
-
-
-//     var character_img = new Image();
-//     character_img.src = './static/link.png';
-//     character_img.onload = function(){
-//         sprite.draw(0, 600, 650);
-        
-//     }
-    
-//     function Sprite(img, width, height, positions){
-//         this.img = img;
-//         this.width = width;
-//         this.height = height;
-//         this.positions = positions;
-//     }
-
-//     Sprite.prototype = {
-//         draw: function(position, x, y){
-//             console.log("drawing link")
-//             var pos = this.positions[position];
-//             ctx.drawImage(
-//                 this.img,
-//                 pos[0],
-//                 pos[1],
-//                 this.width,
-//                 this.height,
-//                 x, 
-//                 y,
-//                 this.width,
-//                 this.height
-//             );
-//         }
-//     }
-//     var sprite = new Sprite(character_img, 21, 25, [
-//         [0,0], [25,0], [50,0]
-//     ]);
-   
-
-//     $(document).on("keypress", function(e){
-//         if(e.which == 32){
-//             var x = 600;
-//             var y = 650;
-//             // for(var i = 0; i <= 2; i++){
-//             //     sprite.draw(i, x, y);
-//             //     x+=25;
-               
-//             // }
-
-            
-//             loadField();
-//             sprite.draw(1, 625, 650);
-//         }
-//     })
-    
-    
-// }
 
 
 
