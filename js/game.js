@@ -1,30 +1,11 @@
 
 
-
-
-// create the canvas
-// var canvas = document.createElement("canvas");
-// var ctx = canvas.getContext('2d');
-// canvas.id = "background"
-// canvas.width = 1550;
-// canvas.height = 960;
-// document.body.appendChild(canvas);
 function init() {
 
     var background_ctx = document.getElementById("background").getContext('2d')
     console.log(background_ctx)
     var tower_ctx = document.getElementById("tower_canvas").getContext('2d')
-    // var background_ctx = document.getElementById("link_canvas").getContext('2d')
 
-
-
-
-    // var tower_canvas = document.createElement("canvas");
-    // var context = tower_canvas.getContext('2d')
-    // canvas.id = "tower_canvas"
-    // canvas.width = 1550;
-    // canvas.height = 960;
-    // document.body.appendChild(tower_canvas);
 
 
 
@@ -32,7 +13,7 @@ function init() {
     background.src = './static/sacredcherrygrove.png';
 
 
-        loadField();
+    loadField();
         
 
 
@@ -46,8 +27,7 @@ function init() {
           background_ctx.fillStyle = pattern;
           background_ctx.fillRect(0,0,1550,960);
           //load the towers and character only after the background has loaded
-
-          callback();
+           callback();
         }
     }
     function loadField() {
@@ -119,122 +99,97 @@ function init() {
             'FIGHTING': [[0,0], [35,0], [70,0], [105,0], [140,0], [175,0]],
             'WALK_LEFT': [[0,105], [35,105], [70,105]],
             'WALK_BACK': [[105,105], [140,105],[175,105]],
-            'WALK_RIGHT': [[0,245], [35,245], [70,245]],
+            'WALK_RIGHT': [[0,210], [35,210], [70,210]],
             'WALK_DOWN': [[0,105], [35,105], [70,105]]
         }
         
         //dx is the width of the sprite aka what we use to increment the sx and sy coordinates
-        var dx = 35;
+        var dx = 0;
         var dy = 0;
         //starting point x and y coordinates on the sprite sheet
         var sx = 0;
         var sy = 0;
         var destX = 500;
-        var destY = 650;
+        var destY = 650; 
         var count = 0;
+        var action;
 
-        function character_img_loaded() {
 
-          console.log("hello")
+
+       function character_img_loaded() {
+
+          console.log("character_img_loaded")
+
           background_ctx.drawImage(character_img, sx, sy,35,35,destX,destY,35,35);
-
 
         }
 
+
+        //establish character position
+        //update character movement
+        function updateAction(position){
+            count++
+            sy = position[0][1];
+            sx = position[0][0] + dx;
+            dx = dx + 35
+            // console.log(sx);
+            // console.log(sy);
+            if(count >= position.length){
+                window.clearInterval(action);
+                sx = 0;
+                dx = 0;
+                count = 0;
+            }
+
+            reloadField(function(){
+
+                background_ctx.drawImage(character_img, sx, sy, 35, 35,destX,destY,35,35);
+            })
+
+        } 
+
+        //Check for keypress to navigate link
         $(document).on("keypress", function(e){
+
             if(e.which == 32){
                 function fight(){
-                    console.log(count);
-                    count++
 
-                    sy = 0;
-                    sx = sx+dx;
-                    if(count >= positions['FIGHTING'].length){
-
-                        window.clearInterval(start_fight);
-                        sx = 0;
-                        count = 0;
-                    }
-                    reloadField(function() {
-
-                        background_ctx.drawImage(character_img, sx, sy, 35, 35,destX,destY,35,35);
-
-                    });
+                    updateAction(positions['FIGHTING']);
                 }
-               var start_fight = setInterval(fight, 50);
+                
+            action = setInterval(fight, 50);
             } 
+
             if(e.which == 50){
-                console.log("hellooooooo")
                 function walk_left(){
-                    sy = 105;
-                    sx = sx + dx;
                     destX -= 15;
-                    count++
-                    if(count >= positions['WALK_LEFT'].length){
-                        window.clearInterval(start_walking);
-                        sx = 0;
-                        count = 0;
-                    }
-                    reloadField(function() {
-
-                        background_ctx.drawImage(character_img, sx, sy, 35, 35,destX,destY,35,35);
-
-                    });
+                    updateAction(positions['WALK_LEFT']);
                 }
-                var start_walking = setInterval(walk_left, 50);
+                action = setInterval(walk_left, 50);
             }
+
             if(e.which == 51){
                 function walk_back(){
-                    count ++
-                    sy = 105;
-                    sx = 105 + dx;
-                    // destX += 15;
                     destY -= 15;
-                    if(count >= positions['WALK_BACK'].length){
-                        window.clearInterval(start_walking_again);
-                        sx = 0;
-                        count = 0;
-                    }
-                    reloadField(function() {
-
-                        background_ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
-                    });
+                    updateAction(positions['WALK_BACK']);
                 }
-                var start_walking_again = setInterval(walk_back, 50);
+                action = setInterval(walk_back, 50);
             }
+            
             if(e.which == 52){
                 function walk_right(){
-                    count++;
-                    sy = 215;
-                    sx += dx ;
                     destX += 15;
-                    if(count >= positions['WALK_RIGHT'].length){
-                        window.clearInterval(hit_the_road_jack);
-                        sx = 0;
-                        count = 0;
-                    }
-                    reloadField(function(){
-                        background_ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
-                    })
+                    updateAction(positions['WALK_RIGHT']);
                 }
-                var hit_the_road_jack = setInterval(walk_right, 50);
+                action = setInterval(walk_right, 50);
             }
+
             if(e.which == 53){
-                function walk_down(){
-                    count++;
-                    sy = 105;
-                    sx += dx ;
+                function walk_down(){ 
                     destY += 15;
-                    if(count >= positions['WALK_DOWN'].length){
-                        window.clearInterval(walking_more);
-                        sx = 0;
-                        count = 0;
-                    }
-                    reloadField(function(){
-                        background_ctx.drawImage(character_img, sx, sy, 35, 35, destX, destY, 35, 35);
-                    })
+                    updateAction(positions['WALK_DOWN']);
                 }
-                var walking_more = setInterval(walk_down, 50);
+                action = setInterval(walk_down, 50);
             }
         })
 
