@@ -11,7 +11,9 @@
       
         <!-- css -->
         <link rel="stylesheet" type="text/css" href="./static/style.css">
-
+        <canvas id="background" width="1550" height="960"></canvas>
+        <canvas id="tower_canvas" width="1550" height="960"></canvas>
+        <canvas id="link_canvas" width="1550" height="960"></canvas>
 
         <script type="text/javascript">
         $(document).ready(function(){
@@ -24,15 +26,10 @@
         </script>
 
     </head>
-    <body>
+    <body onload = 'init()'>
 
 
         <button id='start_game'>Start Game</button>
-        <div id='container'>
-            <div id='play1Castles' class='building'></div>
-        </div>
-        <div id='play2Castles' class='building'></div>
-        <div id='play1Char'></div>
-        <div id='play2Char'></div>
+
     </body>
 </html>

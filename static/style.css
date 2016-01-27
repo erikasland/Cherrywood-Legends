@@ -9,3 +9,19 @@
   height: 30em;
   width: 20em;
 }*/
+
+#background {
+	position: absolute;
+}
+
+#tower_canvas {
+
+	position: absolute;
+	z-index: 1
+}
+
+/*#link_canvas {
+	position: absolute;
+	z-index: 2
+}
+*/
