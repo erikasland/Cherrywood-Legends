@@ -9,16 +9,45 @@
   height: 30em;
   width: 20em;
 }*/
-
-#background {
+canvas{
 	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: transparent;
+}
+/*#background {
+	position: absolute;
+}*/
+#background_canvas {
+	z-index: -1
 }
 
 #tower_canvas {
 
-	position: absolute;
-	z-index: 1
+/*	position: absolute;*/
+	z-index: 0
 }
+.game_over{
+	position: absolute;
+	top: 400px;
+	left: 630px;
+	cursor:default;
+	display: none;
+	font-family: Courier;
+	font-size: 45px;
+
+}
+
+.game_over span{
+	position: relative;
+	cursor: pointer;
+	font-size: 20px;
+}
+
+.game_over span:hover {
+	color: red;
+}
+
 
 /*#link_canvas {
 	position: absolute;

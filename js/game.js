@@ -1,98 +1,289 @@
 
-
 function init() {
 
     var background_ctx = document.getElementById("background").getContext('2d')
-    console.log(background_ctx)
+
     var tower_ctx = document.getElementById("tower_canvas").getContext('2d')
 
+    var game_over = false;
 
-
-
-    var background = new Image();
-    background.src = './static/sacredcherrygrove.png';
+    tower_ctx.clearRect(0, 0, 1550, 960);
+    tower_ctx.clearRect(0, 0, 1550, 960);
+    document.getElementById('game_over').style.display = 'none'
 
 
     loadField();
         
-
+// ---------------reload--------------------
 
     function reloadField(callback){
-        console.log("reloading")
+
         background = new Image();
         background.src = './static/sacredcherrygrove.png';
             //load the background
         background.onload = function() {
-          var pattern = background_ctx.createPattern(background, 'no-repeat');
-          background_ctx.fillStyle = pattern;
-          background_ctx.fillRect(0,0,1550,960);
-          //load the towers and character only after the background has loaded
+        var pattern = background_ctx.createPattern(background, 'no-repeat');
+        background_ctx.fillStyle = pattern;
+        background_ctx.fillRect(0,0,1550,960);
+        //load the towers and character only after the background has loaded
+        // if(callback == true){
+        //     console.log('hereeeeeeeeee ughhh')
+        //     // tower_ctx = document.getElementById("tower_canvas").getContext('2d')
+        //     background_ctx.font = "45px Courier";
+        //     background_ctx.fillText("Game Over", 650, 550);
+        //   } else {
+
            callback();
+          // }
         }
     }
+
+// ------------------initial load---------------------
     function loadField() {
         //load the background
+        var background = new Image();
+        background.src = './static/sacredcherrygrove.png';
         background.onload = function() {
-          var pattern = background_ctx.createPattern(background, 'no-repeat');
-          background_ctx.fillStyle = pattern;
-          background_ctx.fillRect(0,0,1550,960);
-          //load the towers and character only after the background has loaded
-          drawTower();
-          drawCharacter();
+            var pattern = background_ctx.createPattern(background, 'no-repeat');
+            background_ctx.fillStyle = pattern;
+            background_ctx.fillRect(0,0,1550,960);
+            
+            //load the towers and character only after the background has loaded
+            drawTower();
+            drawCharacter(game_over);
 
         };
         
     }
 
+// -------------explosion stuff------------------------
 
-    //draw the towers
-    function drawTower(){
-        var tower = new Image();
-        tower.src = './static/castle.png';
-        tower.onload = function() {
-            var x = 50;
-            var y = 850;
-            var pattern = tower_ctx.createPattern(tower, 'no-repeat');
-            tower_ctx.fillStyle = pattern;
-            //we could pass in a number here instead of hard coding 4
-            for(var i = 0; i < 6; i++){
-                if(i === 1){
-                    x = x + 150;
-                }
-                else if(i == 2){
-                    x = x - 150;
-                }
+    function drawExplosion(tower){
 
-               else if(i == 3){
-                    x = 1300;
-                    y = 850;
-                }
+        var explosion_img = new Image();
+        var explosiveCallback;
+        explosion_img.onload = function(){
 
-                else if (i == 4){
-                    x = x - 150;
-                }
+            explosiveCallback = setInterval(updateExplosion, 200);    
+        }
+            
+        explosion_img.src = './static/explosion.png';
 
-                else if(i == 5){
-                    x = x + 150;
-                }
-                y = y - 200
-                tower_ctx.drawImage(tower, x, y, 176, 276); 
+        var constants = {
+            'EXPLODE_UP': [[0,0], [160,0], [320,0], [480,0], [0,160],[160,160],[320,160],[480,160]]
+        }
+
+        var dx = 0;
+        var dy = 0;
+        var sx = 0;
+        var sy = 0;
+        var destX = tower.x;
+        var destY = tower.y
+        var explosion;
+        var count = 0;
+
+
+        var explosionIndex = 0;
+
+        function updateExplosion() {
+            if (explosionIndex == constants["EXPLODE_UP"].length) {
+                window.clearInterval(explosiveCallback);
+
+                drawTower(tower)
+
             }
 
+            
+            if(explosionIndex < constants['EXPLODE_UP'].length){
+                sy = constants["EXPLODE_UP"][explosionIndex][1];
+                sx = constants["EXPLODE_UP"][explosionIndex][0];
+                tower_ctx.drawImage(explosion_img, sx, sy, 160, 160, destX, destY, 160, 160);
+                explosionIndex++;
+                
+            }
+            
+            
         }
     }
 
 
-    function drawCharacter() {
-        
+// ---------------------tower stuff ---------------------
 
 
-        var character_img = new Image();
-        character_img.onload = function() {
-            character_img_loaded()
+        //create an array to hold each tower object
+    var towers = [{
+                type: 'tower',
+                x: 200,
+                y: 450,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+        }, {
+                type: 'tower',
+                x: 50,
+                y: 250,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+                
+        }, {
+                type: 'tower',
+                x: 50,
+                y: 650,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+
+            
+        }, {
+                type: 'tower',
+                x: 1300,
+                y: 650,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+              
+        }, {
+                type: 'tower',
+                x: 1150,
+                y: 450,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+              
+        }, {
+                type: 'tower',
+                x: 1300,
+                y: 250,
+                w: 176,
+                h: 276,
+                hp: 2,
+                alive: true,
+                flag: false
+            }
+            
+    ]
+
+    //create the flag
+    var flag = Math.floor(Math.random()*7)
+
+    if(flag == 0){
+        towers[0].flag = true;
+    } else if(flag == 1){
+        towers[1].flag = true;
+    } else if(flag == 2){
+        towers[2].flag = true;
+    } else if(flag == 3){
+        towers[3].flag = true;
+    } else if(flag ==4){
+        towers[4].flag = true;
+    } else if(flag == 5){
+        towers[5].flag = true;
+    } else {
+        towers[6].flag = true;
+    }
+
+    function drawTower(tower){
+
+        for(var i = 0; i < towers.length; i++){
+            console.log(towers[i])
+            //check for explosion
+            if(tower == towers[i]){
+                towers[i].alive = false;
+            }
         }
-        // character_img.addEventListener('load', character_img_loaded , false);
-        character_img.src = './static/link.png';
+        var tower_image = new Image()
+        tower_image.src = './static/castle.png';
+        tower_image.onload = function() {
+            var pattern = tower_ctx.createPattern(tower_image, 'no-repeat');
+            tower_ctx.fillStyle = pattern;
+
+            for(var i = 0; i < towers.length; i++){
+                    
+                if(towers[i].alive == true){
+                    tower_ctx.drawImage(tower_image, towers[i].x, towers[i].y, towers[i].w, towers[i].h); 
+
+                } else if(towers[i].alive == false && towers[i].flag == false){
+                    tower_ctx.clearRect(tower.x, tower.y, tower.w, tower.h)
+                    
+                    var rubble_img = new Image();
+                    rubble_img.src = './static/rock.png'
+                    rubble_img.onload = function() {
+                        var pattern = tower_ctx.createPattern(rubble_img, 'no-repeat');
+                        tower_ctx.fillStyle = pattern;
+                        tower_ctx.drawImage(rubble_img, tower.x, tower.y, tower.w, tower.h);
+                    }
+
+                } else if(towers[i].alive == false && towers[i].flag == true) {
+
+                    tower_ctx.clearRect(tower.x, tower.y, tower.w, tower.h)
+
+                    var rubble_img = new Image();
+                    rubble_img.src = './static/rock.png'
+
+                    //flag
+                    var flag_img = new Image();
+                    flag_img.src = './static/flag.png'
+
+                    rubble_img.onload = function() {
+                        var pattern = tower_ctx.createPattern(rubble_img, 'no-repeat');
+                        tower_ctx.fillStyle = pattern;
+                        tower_ctx.drawImage(rubble_img, tower.x, tower.y, tower.w-50, tower.h-90);
+                    }
+
+                    flag_img.onload = function(){
+                        var pattern = tower_ctx.createPattern(flag_img, 'no-repeat');
+                        tower_ctx.fillStyle = pattern;
+                        tower_ctx.drawImage(flag_img, tower.x+60 , tower.y+20, 35, 35);
+                        
+                    }
+                    var game_over = true;
+
+                    drawCharacter(game_over);
+
+                }
+
+            }
+
+        }    
+
+    }
+                    
+
+// -------------------character------------------------
+
+    var character1 = {
+        type: 'character',
+        w: 35,
+        h: 35,
+        x: 800,
+        y: 650,
+        hp: 6,
+        attack: 1
+    }
+
+    function drawCharacter(game_over) {
+        console.log(game_over);
+        if(game_over == false){
+
+            var character_img = new Image();
+            character_img.onload = function() {
+                character_img_loaded()
+            // character_img.addEventListener('load', character_img_loaded , false);
+            }
+            character_img.src = './static/link.png';
+        }
+        game(game_over);
 
         var positions = {
 
@@ -109,16 +300,16 @@ function init() {
         //starting point x and y coordinates on the sprite sheet
         var sx = 0;
         var sy = 0;
-        var destX = 500;
+        var destX = 800;
         var destY = 650; 
         var count = 0;
         var action;
 
+        // var player_one = new SAT.Box(new SAT.Vector(10,10), 35, 35);
 
 
        function character_img_loaded() {
 
-          console.log("character_img_loaded")
 
           background_ctx.drawImage(character_img, sx, sy,35,35,destX,destY,35,35);
 
@@ -132,14 +323,14 @@ function init() {
             sy = position[0][1];
             sx = position[0][0] + dx;
             dx = dx + 35
-            // console.log(sx);
-            // console.log(sy);
+
             if(count >= position.length){
                 window.clearInterval(action);
+
                 sx = 0;
                 dx = 0;
                 count = 0;
-            }
+            }            
 
             reloadField(function(){
 
@@ -148,55 +339,157 @@ function init() {
 
         } 
 
-        //Check for keypress to navigate link
-        $(document).on("keypress", function(e){
+// ------------------functionality------------------------
+        function game(game_over){
 
-            if(e.which == 32){
-                function fight(){
+            if(game_over == true){
+                console.log('GAME OVER!!!')
+                document.getElementById('game_over').style.display = 'block';
+               
+                // tower_ctx.font = "30px Press Start 2P";
 
-                    updateAction(positions['FIGHTING']);
-                }
-                
-            action = setInterval(fight, 50);
-            } 
+            } else {
 
-            if(e.which == 50){
-                function walk_left(){
-                    destX -= 15;
-                    updateAction(positions['WALK_LEFT']);
-                }
-                action = setInterval(walk_left, 50);
+                //Check for keypress to navigate link
+                $(document).on("keyup", function(e){
+                    e.preventDefault();
+                    if(e.which == 32){
+                        function fight(){
+
+                            updateAction(positions['FIGHTING']); 
+                        }
+                     
+                        for(var i = 0; i < towers.length; i++){
+                            if(towers[i].x < character1.x + character1.w && 
+                                towers[i].x + towers[i].w > character1.x &&
+                                towers[i].y < character1.y + character1.h &&
+                                towers[i].h + towers[i].y > character1.y){
+                                
+                                towers[i].hp --
+                                if(towers[i].hp == 0){
+                                    drawExplosion(towers[i], function(){
+
+                                        towers[i].alive = false;
+
+                                    });
+
+                                }
+                         
+                            }
+                        }
+                        
+                    action = setInterval(fight, 50);
+                    } 
+
+                    if(e.which == 50){
+                        function walk_left(){
+                            // for(var i = 3; i < towers.length; i++){
+                            //     if(towers[i].x < character1.x + character1.w && 
+                            //         towers[i].x + towers[i].w > character1.x &&
+                            //         towers[i].y < character1.y + character1.h &&
+                            //         towers[i].h + towers[i].y > character1.y){
+                                        
+                            //             destX+=30;
+                            //             character1.x += 30;
+
+                            //         } else {
+                                        destX -= 15;
+                                        character1.x -= 15;
+                                        updateAction(positions['WALK_LEFT']);
+                                    }
+                             
+                                // }
+                            // }
+                        
+                    action = setInterval(walk_left, 25);
+                    }
+
+                    if(e.which == 51){
+                        function walk_back(){
+                            for(var i = 3; i < towers.length; i++){
+                                if(towers[i].x < character1.x + character1.w && 
+                                    towers[i].x + towers[i].w > character1.x &&
+                                    towers[i].y < character1.y + character1.h &&
+                                    towers[i].h + towers[i].y > character1.y){
+                                    
+                                        destY+=25;
+                                        character1.y+=25;
+                                       
+
+                                    } else{
+                                        destY -= 15;
+                                        character1.y -= 15;
+                                        updateAction(positions['WALK_BACK']);
+                                    }
+                             
+                                }
+                            }
+
+
+                        
+                        action = setInterval(walk_back, 25);
+                    }
+                    
+                    if(e.which == 52){
+                        function walk_right(){
+                            for(var i = 3; i < towers.length; i++){
+                                if(towers[i].x < character1.x + character1.w && 
+                                    towers[i].x + towers[i].w > character1.x &&
+                                    towers[i].y < character1.y + character1.h &&
+                                    towers[i].h + towers[i].y > character1.y){
+                                        
+                                    
+                                        destX-=27;
+                                        character1.x-=27;
+                                        
+
+                                    } else{
+                                        destX += 15;
+                                        character1.x += 15;
+                                        updateAction(positions['WALK_RIGHT']);
+                                    }
+                             
+                                }
+                            }
+                        
+                        action = setInterval(walk_right, 25);
+                    }
+
+                    if(e.which == 53){
+                        function walk_down(){ 
+                            for(var i = 3; i < towers.length; i++){
+                                if(towers[i].x < character1.x + character1.w && 
+                                    towers[i].x + towers[i].w > character1.x &&
+                                    towers[i].y < character1.y + character1.h &&
+                                    towers[i].h + towers[i].y > character1.y){
+                                    
+                                    
+                                        destY -= 27;
+                                        character1.y -= 27;
+                                       
+
+                                    } else {
+                                        destY += 15;
+                                        character1.y += 15;
+                                        updateAction(positions['WALK_DOWN']);
+                                    }
+                             
+                                }
+                            }
+                        
+                        action = setInterval(walk_down, 25);
+                    }
+
+                })
+
             }
-
-            if(e.which == 51){
-                function walk_back(){
-                    destY -= 15;
-                    updateAction(positions['WALK_BACK']);
-                }
-                action = setInterval(walk_back, 50);
-            }
-            
-            if(e.which == 52){
-                function walk_right(){
-                    destX += 15;
-                    updateAction(positions['WALK_RIGHT']);
-                }
-                action = setInterval(walk_right, 50);
-            }
-
-            if(e.which == 53){
-                function walk_down(){ 
-                    destY += 15;
-                    updateAction(positions['WALK_DOWN']);
-                }
-                action = setInterval(walk_down, 50);
-            }
-        })
-
+        }
+        
     }
 
 
 }
+
 
 
 
