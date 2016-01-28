@@ -110,13 +110,13 @@ function init() {
 // ---------------------tower stuff ---------------------
 
 
-        //create an array to hold each tower object
+    //create an array to hold each tower object
     var towers = [{
                 type: 'tower',
                 x: 200,
                 y: 450,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -124,8 +124,8 @@ function init() {
                 type: 'tower',
                 x: 50,
                 y: 250,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -134,8 +134,8 @@ function init() {
                 type: 'tower',
                 x: 50,
                 y: 650,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -145,8 +145,8 @@ function init() {
                 type: 'tower',
                 x: 1300,
                 y: 650,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -155,8 +155,8 @@ function init() {
                 type: 'tower',
                 x: 1150,
                 y: 450,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -165,8 +165,8 @@ function init() {
                 type: 'tower',
                 x: 1300,
                 y: 250,
-                w: 176,
-                h: 276,
+                w: 151,
+                h: 201,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -174,24 +174,7 @@ function init() {
             
     ]
 
-    //create the flag
-    var flag = Math.floor(Math.random()*7)
 
-    if(flag == 0){
-        towers[0].flag = true;
-    } else if(flag == 1){
-        towers[1].flag = true;
-    } else if(flag == 2){
-        towers[2].flag = true;
-    } else if(flag == 3){
-        towers[3].flag = true;
-    } else if(flag ==4){
-        towers[4].flag = true;
-    } else if(flag == 5){
-        towers[5].flag = true;
-    } else {
-        towers[6].flag = true;
-    }
 
     function drawTower(tower){
 
@@ -202,6 +185,10 @@ function init() {
                 towers[i].alive = false;
             }
         }
+        //create the flag
+        var flag_index = Math.floor(Math.random()*7)
+        
+        towers[flag_index].flag = true;
         var tower_image = new Image()
         tower_image.src = './static/castle.png';
         tower_image.onload = function() {
@@ -238,13 +225,13 @@ function init() {
                     rubble_img.onload = function() {
                         var pattern = tower_ctx.createPattern(rubble_img, 'no-repeat');
                         tower_ctx.fillStyle = pattern;
-                        tower_ctx.drawImage(rubble_img, tower.x, tower.y, tower.w-50, tower.h-90);
+                        tower_ctx.drawImage(rubble_img, tower.x, tower.y, tower.w-30, tower.h-60);
                     }
 
                     flag_img.onload = function(){
                         var pattern = tower_ctx.createPattern(flag_img, 'no-repeat');
                         tower_ctx.fillStyle = pattern;
-                        tower_ctx.drawImage(flag_img, tower.x+60 , tower.y+20, 35, 35);
+                        tower_ctx.drawImage(flag_img, tower.x+50 , tower.y+5, 35, 35);
                         
                     }
                     var game_over = true;
@@ -305,7 +292,6 @@ function init() {
         var count = 0;
         var action;
 
-        // var player_one = new SAT.Box(new SAT.Vector(10,10), 35, 35);
 
 
        function character_img_loaded() {
@@ -340,6 +326,7 @@ function init() {
         } 
 
 // ------------------functionality------------------------
+        
         function game(game_over){
 
             if(game_over == true){
@@ -352,6 +339,9 @@ function init() {
 
                 //Check for keypress to navigate link
                 $(document).on("keyup", function(e){
+                    var barrier_top = {x:0, y:0, w:1550, h:300}
+                    var barrier_bottom = {x:0, y:880, w:1550, h: 200}
+                    
                     e.preventDefault();
                     if(e.which == 32){
                         function fight(){
@@ -378,61 +368,76 @@ function init() {
                             }
                         }
                         
-                    action = setInterval(fight, 50);
+                    action = setInterval(fight, 10);
                     } 
 
                     if(e.which == 50){
                         function walk_left(){
-                            // for(var i = 3; i < towers.length; i++){
-                            //     if(towers[i].x < character1.x + character1.w && 
-                            //         towers[i].x + towers[i].w > character1.x &&
-                            //         towers[i].y < character1.y + character1.h &&
-                            //         towers[i].h + towers[i].y > character1.y){
+                            
+                            for(var i = 0; i < towers.length; i++){
+                                if(towers[i].x < character1.x + character1.w && 
+                                    towers[i].x + towers[i].w > character1.x &&
+                                    towers[i].y < character1.y + character1.h &&
+                                    towers[i].h + towers[i].y > character1.y){
                                         
-                            //             destX+=30;
-                            //             character1.x += 30;
+                                        destX+=27;
+                                        character1.x += 27;
 
-                            //         } else {
-                                        destX -= 15;
-                                        character1.x -= 15;
+                                    } else {
+                                        destX -= 5;
+                                        character1.x -= 5;
                                         updateAction(positions['WALK_LEFT']);
                                     }
                              
-                                // }
-                            // }
+                                }
+                            }
                         
-                    action = setInterval(walk_left, 25);
+                    action = setInterval(walk_left, 5);
                     }
 
                     if(e.which == 51){
+                        console.log(background_ctx.canvas.height-20);
                         function walk_back(){
-                            for(var i = 3; i < towers.length; i++){
+                            if(barrier_top.x < character1.x + character1.w && 
+                                barrier_top.x + barrier_top.w > character1.x &&
+                                barrier_top.y < character1.y + character1.h &&
+                                barrier_top.h + barrier_top.y > character1.y){
+                                
+                                    destY+=27;
+                                    character1.y+=27;
+                            } else {
+                                destY -= 5;
+                                character1.y -= 5;
+                                updateAction(positions['WALK_BACK']);
+                            }
+                                
+                            for(var i = 0; i < towers.length; i++){
                                 if(towers[i].x < character1.x + character1.w && 
                                     towers[i].x + towers[i].w > character1.x &&
                                     towers[i].y < character1.y + character1.h &&
                                     towers[i].h + towers[i].y > character1.y){
                                     
-                                        destY+=25;
-                                        character1.y+=25;
+                                        destY+=27;
+                                        character1.y+=27;
                                        
 
-                                    } else{
-                                        destY -= 15;
-                                        character1.y -= 15;
-                                        updateAction(positions['WALK_BACK']);
-                                    }
-                             
+                                } else{
+                                    destY -= 5;
+                                    character1.y -= 5;
+                                    updateAction(positions['WALK_BACK']);
                                 }
+                             
                             }
+                        }
 
 
                         
-                        action = setInterval(walk_back, 25);
+                        action = setInterval(walk_back, 5);
                     }
                     
                     if(e.which == 52){
                         function walk_right(){
-                            for(var i = 3; i < towers.length; i++){
+                            for(var i = 0; i < towers.length; i++){
                                 if(towers[i].x < character1.x + character1.w && 
                                     towers[i].x + towers[i].w > character1.x &&
                                     towers[i].y < character1.y + character1.h &&
@@ -444,20 +449,33 @@ function init() {
                                         
 
                                     } else{
-                                        destX += 15;
-                                        character1.x += 15;
+                                        destX += 5;
+                                        character1.x += 5;
                                         updateAction(positions['WALK_RIGHT']);
                                     }
                              
                                 }
                             }
                         
-                        action = setInterval(walk_right, 25);
+                        action = setInterval(walk_right, 5);
                     }
 
                     if(e.which == 53){
                         function walk_down(){ 
-                            for(var i = 3; i < towers.length; i++){
+                            if(barrier_bottom.x < character1.x + character1.w && 
+                                barrier_bottom.x + barrier_bottom.w > character1.x &&
+                                barrier_bottom.y < character1.y + character1.h &&
+                                barrier_bottom.h + barrier_bottom.y > character1.y){
+                                
+                                    destY-=27;
+                                    character1.y-=27;
+                            } else {
+                                destY += 5;
+                                character1.y += 5;
+                                updateAction(positions['WALK_DOWN']);
+                            }
+
+                            for(var i = 0; i < towers.length; i++){
                                 if(towers[i].x < character1.x + character1.w && 
                                     towers[i].x + towers[i].w > character1.x &&
                                     towers[i].y < character1.y + character1.h &&
@@ -469,15 +487,15 @@ function init() {
                                        
 
                                     } else {
-                                        destY += 15;
-                                        character1.y += 15;
+                                        destY += 5;
+                                        character1.y += 5;
                                         updateAction(positions['WALK_DOWN']);
                                     }
                              
                                 }
                             }
                         
-                        action = setInterval(walk_down, 25);
+                        action = setInterval(walk_down, 5);
                     }
 
                 })
