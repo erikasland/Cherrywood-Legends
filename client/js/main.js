@@ -13,7 +13,5 @@ myModule.config(function($routeProvider){
         })
         .when('/game', {
             templateUrl: './../partials/index.html',
-            controller: 'battleController',
-            controllerAs: 'battleControl'
         })
 })
