@@ -179,7 +179,6 @@ function init() {
     function drawTower(tower){
 
         for(var i = 0; i < towers.length; i++){
-            console.log(towers[i])
             //check for explosion
             if(tower == towers[i]){
                 towers[i].alive = false;
@@ -330,8 +329,6 @@ function init() {
 
                 if(towers[i].x < (character1.x-10) + character1.w && towers[i].x + towers[i].w > (character1.x+10) &&towers[i].y < (character1.y-10) + character1.h &&towers[i].h + towers[i].y > (character1.y+10))
                 {
-                    console.log(towers[i]);
-                    console.log("TRUE")
                     return true;
                 }
             }
@@ -344,7 +341,7 @@ function init() {
 
 
             if(game_over == true){
-                console.log('GAME OVER!!!')
+                
                 document.getElementById('game_over').style.display = 'block';
                
                 // tower_ctx.font = "30px Press Start 2P";

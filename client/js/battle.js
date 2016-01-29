@@ -9,8 +9,6 @@ myModule.controller('battleController', function(userFactory){
 
     this.updateAndShow = function(user){
         userFactory.update(user);
-        userFactory.show(user, function(user){
-            _this.current_user = user;
-        });
+        userFactory.show(user);
     }
 })
