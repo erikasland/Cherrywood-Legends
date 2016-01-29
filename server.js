@@ -7,6 +7,6 @@ app.use(express.static(path.join(__dirname, './client')))
 require('./server/config/mongoose.js');
 require('./server/config/routes.js')(app);
 app.listen(8000, function(){
-    'Running on 8000!'
+    console.log('Running on 8000!');
 });
 

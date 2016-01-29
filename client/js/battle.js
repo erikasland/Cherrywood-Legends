@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+myModule.controller('battleController', function(userFactory, $scope){
+
+
+	$scope.get = function(){
+
+		console.log("hi")
+		console.log(game_over)
+	}
+
+  var win = init();
+  console.log(game_over);
+
+=======
 myModule.controller('battleController', function(userFactory){
     init();
     var _this = this;
@@ -11,4 +25,5 @@ myModule.controller('battleController', function(userFactory){
         userFactory.update(user);
         userFactory.show(user);
     }
+>>>>>>> master
 })

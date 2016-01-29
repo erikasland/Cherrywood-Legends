@@ -1,6 +1,10 @@
+function restart(){
+
+    location.reload();
+}
 
 function init() {
-
+    
     var background_ctx = document.getElementById("background").getContext('2d')
 
     var tower_ctx = document.getElementById("tower_canvas").getContext('2d')
@@ -12,7 +16,7 @@ function init() {
     document.getElementById('game_over').style.display = 'none'
 
 
-    loadField();
+    loadField(game_over);
         
 // ---------------reload--------------------
 
@@ -25,21 +29,12 @@ function init() {
         var pattern = background_ctx.createPattern(background, 'no-repeat');
         background_ctx.fillStyle = pattern;
         background_ctx.fillRect(0,0,2000,960);
-        //load the towers and character only after the background has loaded
-        // if(callback == true){
-        //     console.log('hereeeeeeeeee ughhh')
-        //     // tower_ctx = document.getElementById("tower_canvas").getContext('2d')
-        //     background_ctx.font = "45px Courier";
-        //     background_ctx.fillText("Game Over", 650, 550);
-        //   } else {
-
-           callback();
-          // }
+        callback();
         }
     }
 
 // ------------------initial load---------------------
-    function loadField() {
+    function loadField(game_over) {
         //load the background
         var background = new Image();
         background.src = './../static/sacredcherrygrove.png';
@@ -64,7 +59,7 @@ function init() {
         var explosiveCallback;
         explosion_img.onload = function(){
 
-            explosiveCallback = setInterval(updateExplosion, 200);    
+            explosiveCallback = setInterval(updateExplosion, 100);    
         }
             
         explosion_img.src = './../static/explosion.png';
@@ -173,8 +168,17 @@ function init() {
             }
             
     ]
+    //check to see if the towers have loaded before calling on flag function
+    if(towers.length > 1){
+        makeFlag();
+    }
 
-
+    //create the flag 
+    function makeFlag(){
+        var flag_index = Math.floor(Math.random()*6)
+        towers[flag_index].flag = true;
+        
+    }
 
     function drawTower(tower){
 
@@ -184,10 +188,7 @@ function init() {
                 towers[i].alive = false;
             }
         }
-        //create the flag
-        var flag_index = Math.floor(Math.random()*7)
-        
-        towers[flag_index].flag = true;
+
         var tower_image = new Image()
         tower_image.src = './../static/castle.png';
         tower_image.onload = function() {
@@ -232,17 +233,19 @@ function init() {
                         tower_ctx.fillStyle = pattern;
                         tower_ctx.drawImage(flag_img, tower.x+50 , tower.y+5, 35, 35);
                         
+                        
                     }
-                    var game_over = true;
+                    game_over = true;
 
                     drawCharacter(game_over);
-
+                    // jklfdajoifejaklfejaoifejalkfejaiojfeklajfeklajfeioa
+  
                 }
-
+                
             }
-
+           
         }    
-
+        
     }
                     
 
@@ -259,15 +262,16 @@ function init() {
     }
 
     function drawCharacter(game_over) {
+        console.log(game_over);
         if(game_over == false){
-
             var character_img = new Image();
             character_img.onload = function() {
                 character_img_loaded()
-            // character_img.addEventListener('load', character_img_loaded , false);
             }
+
             character_img.src = './../static/linkage.png';
         }
+
         game(game_over);
 
         var positions = {
@@ -323,27 +327,35 @@ function init() {
 
         } 
 
-        function collisionDetection(character1) {
+        function collisionDetection(character1, direction) {
 
             for(var i = 0; i < towers.length; i++){
-
                 if(towers[i].x < (character1.x-10) + character1.w && towers[i].x + towers[i].w > (character1.x+10) &&towers[i].y < (character1.y-10) + character1.h &&towers[i].h + towers[i].y > (character1.y+10))
                 {
+<<<<<<< HEAD
+                    console.log(towers[i]);
+                    // console.log("TRUE")
+=======
+>>>>>>> master
                     return true;
                 }
             }
+        
             return false;  
         }
 
-// ------------------functionality------------------------
+// ------------------functionality of char ++ game over------------------------
 
         function game(game_over){
 
-
             if(game_over == true){
+<<<<<<< HEAD
+=======
                 
+>>>>>>> master
                 document.getElementById('game_over').style.display = 'block';
-               
+                console.log(angular.element(document.getElementById('game')).scope().get())
+                return game_over
                 // tower_ctx.font = "30px Press Start 2P";
 
             } else {
@@ -353,8 +365,11 @@ function init() {
                     var barrier_top = {x:0, y:0, w:2000, h:300}
                     var barrier_bottom = {x:0, y:880, w:2000, h: 200}
                     
-                    e.preventDefault();
                     if(e.which == 32){
+
+                        e.preventDefault();
+                        clearInterval(action);
+
                         function fight(){
 
                             updateAction(positions['FIGHTING']); 
@@ -368,6 +383,7 @@ function init() {
                                 
                                 towers[i].hp --
                                 if(towers[i].hp == 0){
+                                    setTimeout(drawExplosion, 1000)
                                     drawExplosion(towers[i], function(){
 
                                         towers[i].alive = false;
@@ -383,9 +399,13 @@ function init() {
                     } 
 
                     if(e.which == 37){
-                        function walk_left(){
 
-                            if(collisionDetection(character1)) {
+                        e.preventDefault();
+                        clearInterval(action);
+
+                        function walk_left(){
+                            var direction = 'left';
+                            if(collisionDetection(character1, direction)) {
                                 destX+=0;
                                 character1.x += 0;
                             } else {
@@ -393,14 +413,18 @@ function init() {
                                 character1.x -= 5;
                                 updateAction(positions['WALK_LEFT']);
                             }        
-                        
                         }
 
                         action = setInterval(walk_left, 5);
                     }
 
                     if(e.which == 38){
+
+                        e.preventDefault();
+                        clearInterval(action);
+                        
                         function walk_back(){
+
 
                             if(barrier_top.x < character1.x + character1.w && 
                                 barrier_top.x + barrier_top.w > character1.x &&
@@ -430,9 +454,13 @@ function init() {
                     }
                     
                     if(e.which == 39){
-                        function walk_right(){
 
-                            if(collisionDetection(character1)){
+                        e.preventDefault();
+                        clearInterval(action);
+
+                        function walk_right(){
+                            var direction = 'right';
+                            if(collisionDetection(character1, direction)){
                                 destX-=0;
                                 character1.x-=0;
 
@@ -447,6 +475,10 @@ function init() {
                     }
 
                     if(e.which == 40){
+
+                        e.preventDefault();
+                        clearInterval(action);
+
                         function walk_down(){ 
                             if(barrier_bottom.x < character1.x + character1.w && 
                                 barrier_bottom.x + barrier_bottom.w > character1.x &&
@@ -479,10 +511,8 @@ function init() {
 
             }
         }
-        
+  
     }
-
-
 }
 
 
