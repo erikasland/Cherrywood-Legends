@@ -1,29 +1,7 @@
 {
-<<<<<<< HEAD
   "dependencies": {
     "body-parser": "~1.14.2",
     "express": "~4.13.4",
     "mongoose": "~4.3.7"
-=======
-  "name": "the_game",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/erikasland/the_game.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/erikasland/the_game/issues"
-  },
-  "homepage": "https://github.com/erikasland/the_game#readme",
-  "dependencies": {
-    "express": "^4.13.4"
->>>>>>> 315b919dc33896666aa77c09c103327187abb578
   }
 }
