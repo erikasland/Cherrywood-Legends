@@ -260,7 +260,6 @@ function init() {
     }
 
     function drawCharacter(game_over) {
-        console.log(game_over);
         if(game_over == false){
 
             var character_img = new Image();
@@ -325,9 +324,24 @@ function init() {
 
         } 
 
+        function collisionDetection(character1) {
+
+            for(var i = 0; i < towers.length; i++){
+
+                if(towers[i].x < (character1.x-10) + character1.w && towers[i].x + towers[i].w > (character1.x+10) &&towers[i].y < (character1.y-10) + character1.h &&towers[i].h + towers[i].y > (character1.y+10))
+                {
+                    console.log(towers[i]);
+                    console.log("TRUE")
+                    return true;
+                }
+            }
+            return false;  
+        }
+
 // ------------------functionality------------------------
-        
+
         function game(game_over){
+
 
             if(game_over == true){
                 console.log('GAME OVER!!!')
@@ -350,8 +364,8 @@ function init() {
                         }
                      
                         for(var i = 0; i < towers.length; i++){
-                            if(towers[i].x < character1.x + character1.w && 
-                                towers[i].x + towers[i].w > character1.x &&
+                            if(towers[i].x-5 < character1.x + character1.w && 
+                                towers[i].x-5 + towers[i].w > character1.x &&
                                 towers[i].y < character1.y + character1.h &&
                                 towers[i].h + towers[i].y > character1.y){
                                 
@@ -373,89 +387,64 @@ function init() {
 
                     if(e.which == 50){
                         function walk_left(){
-                            
-                            for(var i = 0; i < towers.length; i++){
-                                if(towers[i].x < character1.x + character1.w && 
-                                    towers[i].x + towers[i].w > character1.x &&
-                                    towers[i].y < character1.y + character1.h &&
-                                    towers[i].h + towers[i].y > character1.y){
-                                        
-                                        destX+=27;
-                                        character1.x += 27;
 
-                                    } else {
-                                        destX -= 5;
-                                        character1.x -= 5;
-                                        updateAction(positions['WALK_LEFT']);
-                                    }
-                             
-                                }
-                            }
+                            if(collisionDetection(character1)) {
+                                destX+=0;
+                                character1.x += 0;
+                            } else {
+                                destX -= 5;
+                                character1.x -= 5;
+                                updateAction(positions['WALK_LEFT']);
+                            }        
                         
-                    action = setInterval(walk_left, 5);
+                        }
+
+                        action = setInterval(walk_left, 5);
                     }
 
                     if(e.which == 51){
-                        console.log(background_ctx.canvas.height-20);
                         function walk_back(){
+
                             if(barrier_top.x < character1.x + character1.w && 
                                 barrier_top.x + barrier_top.w > character1.x &&
                                 barrier_top.y < character1.y + character1.h &&
                                 barrier_top.h + barrier_top.y > character1.y){
                                 
-                                    destY+=27;
-                                    character1.y+=27;
+                                    destY+=0;
+                                    character1.y+=0;
+
                             } else {
                                 destY -= 5;
                                 character1.y -= 5;
                                 updateAction(positions['WALK_BACK']);
                             }
                                 
-                            for(var i = 0; i < towers.length; i++){
-                                if(towers[i].x < character1.x + character1.w && 
-                                    towers[i].x + towers[i].w > character1.x &&
-                                    towers[i].y < character1.y + character1.h &&
-                                    towers[i].h + towers[i].y > character1.y){
-                                    
-                                        destY+=27;
-                                        character1.y+=27;
-                                       
-
-                                } else{
-                                    destY -= 5;
-                                    character1.y -= 5;
-                                    updateAction(positions['WALK_BACK']);
-                                }
-                             
+                            if(collisionDetection(character1)){
+                                destY -= 0;
+                                character1.x -= 0;
+                            } else {
+                                destY -= 5;
+                                character1.y -= 5;
+                                updateAction(positions['WALK_BACK']);
                             }
                         }
 
-
-                        
                         action = setInterval(walk_back, 5);
                     }
                     
                     if(e.which == 52){
                         function walk_right(){
-                            for(var i = 0; i < towers.length; i++){
-                                if(towers[i].x < character1.x + character1.w && 
-                                    towers[i].x + towers[i].w > character1.x &&
-                                    towers[i].y < character1.y + character1.h &&
-                                    towers[i].h + towers[i].y > character1.y){
-                                        
-                                    
-                                        destX-=27;
-                                        character1.x-=27;
-                                        
 
-                                    } else{
-                                        destX += 5;
-                                        character1.x += 5;
-                                        updateAction(positions['WALK_RIGHT']);
-                                    }
-                             
-                                }
-                            }
+                            if(collisionDetection(character1)){
+                                destX-=0;
+                                character1.x-=0;
+
+                            } else{
+                                destX += 5;
+                                character1.x += 5;
+                                updateAction(positions['WALK_RIGHT']);
+                            }       
+                        }
                         
                         action = setInterval(walk_right, 5);
                     }
@@ -467,34 +456,25 @@ function init() {
                                 barrier_bottom.y < character1.y + character1.h &&
                                 barrier_bottom.h + barrier_bottom.y > character1.y){
                                 
-                                    destY-=27;
-                                    character1.y-=27;
+                                    destY-=0;
+                                    character1.y-=0;
                             } else {
                                 destY += 5;
                                 character1.y += 5;
                                 updateAction(positions['WALK_DOWN']);
                             }
 
-                            for(var i = 0; i < towers.length; i++){
-                                if(towers[i].x < character1.x + character1.w && 
-                                    towers[i].x + towers[i].w > character1.x &&
-                                    towers[i].y < character1.y + character1.h &&
-                                    towers[i].h + towers[i].y > character1.y){
-                                    
-                                    
-                                        destY -= 27;
-                                        character1.y -= 27;
-                                       
+                            if(collisionDetection(character1)){
+                                destY -= 0;
+                                character1.y -= 0;
 
-                                    } else {
-                                        destY += 5;
-                                        character1.y += 5;
-                                        updateAction(positions['WALK_DOWN']);
-                                    }
-                             
-                                }
+                            } else {
+                                destY += 5;
+                                character1.y += 5;
+                                updateAction(positions['WALK_DOWN']);
                             }
-                        
+                        }
+                    
                         action = setInterval(walk_down, 5);
                     }
 
