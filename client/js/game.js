@@ -183,7 +183,6 @@ function init() {
     function drawTower(tower){
 
         for(var i = 0; i < towers.length; i++){
-            console.log(towers[i])
             //check for explosion
             if(tower == towers[i]){
                 towers[i].alive = false;
@@ -333,8 +332,11 @@ function init() {
             for(var i = 0; i < towers.length; i++){
                 if(towers[i].x < (character1.x-10) + character1.w && towers[i].x + towers[i].w > (character1.x+10) &&towers[i].y < (character1.y-10) + character1.h &&towers[i].h + towers[i].y > (character1.y+10))
                 {
+<<<<<<< HEAD
                     console.log(towers[i]);
                     // console.log("TRUE")
+=======
+>>>>>>> master
                     return true;
                 }
             }
@@ -347,6 +349,10 @@ function init() {
         function game(game_over){
 
             if(game_over == true){
+<<<<<<< HEAD
+=======
+                
+>>>>>>> master
                 document.getElementById('game_over').style.display = 'block';
                 console.log(angular.element(document.getElementById('game')).scope().get())
                 return game_over
