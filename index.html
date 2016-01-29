@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <audio src="./static/jackchandler.mp3" autoplay>  <!-- move to partials -->
+        </audio>
+        <title>the_game</title>
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <!-- Game.js file -->
+        <script src='./js/game.js'></script>
+        
+
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="./static/style.css">
+        <canvas id="background" width="1550" height="960"></canvas>
+        <canvas id="tower_canvas" width="1550" height="960"></canvas>
+        <canvas id="link_canvas" width="1550" height="960"></canvas>
+
+        <script type="text/javascript">
+        // $(document).ready(function(){
+        //     $('#start_game').click(function(){
+        //         $('#start_game').hide()
+        //         var new_game = new game('play1Castles', 'play1Char');
+        //         new_game.init()
+        //     })
+        // })
+        </script>
+
+    </head>
+    <body onload = 'init()'>
+        <div id = "game_over" class = "game_over"> Game Over<p><span onclick="init()">Restart</span></p></div>
+
+    </body>
+</html>
