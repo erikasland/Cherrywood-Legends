@@ -1,5 +1,13 @@
-myModule.controller('battleController', function(userFactory){
+myModule.controller('battleController', function(userFactory, $scope){
     init();
+    $scope.get = function(){
+
+        console.log("hi")
+        console.log(game_over)
+    }
+
+    var win = init();
+    console.log(game_over);
     var _this = this;
     this.current_user = userFactory.user1
 
@@ -9,8 +17,6 @@ myModule.controller('battleController', function(userFactory){
 
     this.updateAndShow = function(user){
         userFactory.update(user);
-        userFactory.show(user, function(user){
-            _this.current_user = user;
-        });
+        userFactory.show(user);
     }
 })
