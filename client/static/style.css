@@ -1,32 +1,18 @@
-
-/*.castle{
-  height: 17em;
-  width: 11em;
-  display: inline-block;
-}*/
-
-/*#link{
-  height: 30em;
-  width: 20em;
-}*/
 canvas{
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	background: transparent;
 }
-/*#background {
-	position: absolute;
-}*/
-#background_canvas {
+
+#background_canvas{
 	z-index: -1
 }
 
-#tower_canvas {
-
-/*	position: absolute;*/
+#tower_canvas{
 	z-index: 0
 }
+
 .game_over{
 	position: absolute;
 	top: 400px;
@@ -44,13 +30,6 @@ canvas{
 	font-size: 20px;
 }
 
-.game_over span:hover {
+.game_over span:hover{
 	color: red;
 }
-
-
-/*#link_canvas {
-	position: absolute;
-	z-index: 2
-}
-*/
