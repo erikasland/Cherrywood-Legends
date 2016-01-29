@@ -1,13 +1,12 @@
 var express = require('express');
 var app = express();
-
-app.use(express.static(__dirname))
-
-app.get('/',function(req, res){
-	res.render('index');
-})
-
+var path = require('path');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, './client')))
+require('./server/config/mongoose.js');
+require('./server/config/routes.js')(app);
 app.listen(8000, function(){
-	console.log('THE GAME HAS BEGUN!!!!!!!')
-})
+    'Running on 8000!'
+});
 
