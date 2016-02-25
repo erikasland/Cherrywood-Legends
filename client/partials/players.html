@@ -1,12 +1,15 @@
 <audio src="static/bubblegumbay.mp3" autoplay></audio>
-<div class='wrapper' >
-    <div id='name_wrap'>
-        <h2 id='enter_name'>Enter Your Name</h2>
-        <div id='input_h2_wrap'>
+
+<div id='enter-user-wrapper' >
+    <div id='center-wrap'>
             <div id='input_wrap' ng-keypress='playerControl.onKeyPress($event)' tabindex='0'>
-                <span>Player 1:</span><input type='text' ng-model='playerControl.new_user.user1'>
+                <div id='opaq-color'></div>
+                <h2 id='enter_name'>Enter Your Name</h2>
+                <div id='input'>
+                    <span>Player 1: </span>
+                    <input type='text' id='username' ng-model='playerControl.new_user.user1'>
+                </div>
+                <h2 id='press_enter'>Press Enter To Begin!</h2>
             </div>
-            <h2 id='press_enter'>Press Enter To Begin!</h2>
-        </div>
     </div>
 </div>

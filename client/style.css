@@ -18,9 +18,8 @@ html {
 
 #start{
     font-family: 'Press Start 2P';
-    position: absolute;
-    left: 28%;
-    top: 51%;
+    text-align: center;
+    margin-top: 9em;
 }
 
 #viewdiv{
@@ -35,25 +34,8 @@ html {
 }
 
 #start-link-div{
-    width: 65%;
+    width: 100%;
     height: 100%;
-}
-
-#castle-div{
-    width: 34%;
-    height: 100%;
-}
-
-#stan{
-    z-index: 1;
-}
-
-#castle{
-    width: 25em;
-    height: 36em;
-    position: absolute;
-    bottom: 0em;
-    right: 0em;
 }
 
 #link{
@@ -68,110 +50,79 @@ html {
     z-index: -1;
 }
 
-
-/*#mog{
-    width: 1.5em;
-    height: 1.5em;
-    position: absolute;
-    bottom: 45.5%;
-    left: 85%;
+#center-wrap{
+    margin: 3em auto 0 auto;
 }
 
-#mog1{
-    width: 1.5em;
-    height: 1.5em;
-    position: absolute;
-    bottom:67%;
-    left: 62%;
-}
-
-#mog2{
-    width: 1.5em;
-    height: 1.5em;
-    position: absolute;
-    bottom:57%;
-    left: 16%;
-}
-
-#mog3{
-    width: 15em;
-    height: 15em;
-    position: absolute;
-    bottom: 6.2%;
-    left: -5%;
-}
-*/
-#landing-wrapper{
+#enter-user-wrapper{
     width: 100%;
+    height: 100%;
+    margin-top: 19em;
 }
-span{
+
+#enter_name, #press_enter{
     font-family: 'Press Start 2P';
-    font-size: 1em;
-}
-
-.wrapper{
-    width: 100%;
-    margin: 0 auto
-}
-
-#name_wrap{
-    width: 32em;
-    margin: 0 auto;
-}
-
-#input_h2_wrap{
-    width: 32em;
-}
-
-#input_wrap{
-    width: 20em;
-    margin: -8em auto;
-}
-
-input{
-    display: inline-block;
-    border: 1px solid grey;
-}
-
-#enter_name{
-    width: 22em;
+    text-align: center;
 }
 
 #press_enter{
-    font-family: 'Press Start 2P';
-    text-align: center;
-    position: absolute;
-    top: 22em;
+    font-size: 1.1em;
 }
 
-/*.castle{
-  height: 17em;
-  width: 11em;
-  display: inline-block;
-}*/
 
-/*#link{
-  height: 30em;
-  width: 20em;
-}*/
+#enter_name{
+    margin-top: 1.5em;
+    font-size: 1.4em;
+}
+
+#opaq-color{
+    background-color: lightgrey;
+    width: 30em;
+    height: 15em;
+    opacity: .8;
+    position: absolute;
+    z-index: -1;
+    border-radius: .5em;
+}
+
+#input_wrap{
+    width: 30em;
+    height: 15em;
+    border: dashed .2em black;
+    border-radius: .5em;
+    margin: 0 auto;
+}
+
+#input{
+    margin: 0 auto;
+    width: 19em;
+}
+
+span{
+    font-family: 'Press Start 2P';
+    font-size: 1.2em
+}
+
+#username{
+    width: 8em;
+    margin: 0 auto 5em auto;
+}
+
 canvas{
     position: absolute;
     top: 0px;
     left: 0px;
     background: transparent;
 }
-/*#background {
-    position: absolute;
-}*/
+
 #background_canvas {
     z-index: -1
 }
 
 #tower_canvas {
-
-/*  position: absolute;*/
     z-index: 0
 }
+
 .game_over{
     position: absolute;
     top: 400px;
