@@ -4,11 +4,12 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height: 100%
 }
 
-/*html, body, #viewdiv{
-    min-height: 100%;
-}*/
+html{
+    overflow: hidden;
+}
 
 #title{
     font-family: 'Alex Brush';
@@ -18,8 +19,10 @@ html {
 
 #start{
     font-family: 'Press Start 2P';
-    text-align: center;
-    margin-top: 9em;
+    position: absolute;
+    top: 60%;
+    left: 38%;
+    transform: translateY(-300%) translateX(-5%);
 }
 
 #viewdiv{
@@ -51,13 +54,15 @@ html {
 }
 
 #center-wrap{
-    margin: 3em auto 0 auto;
+    position: absolute;
+    top: 45%;
+    transform: translateY(-5%) translateX(-40%);
+    left: 47%;
 }
 
 #enter-user-wrapper{
     width: 100%;
     height: 100%;
-    margin-top: 19em;
 }
 
 #enter_name, #press_enter{
@@ -108,11 +113,19 @@ span{
     margin: 0 auto 5em auto;
 }
 
+
+#game{
+    width: 75em;
+    height: 100%;
+    margin: 0 auto;
+}
+
 canvas{
     position: absolute;
-    top: 0px;
-    left: 0px;
     background: transparent;
+    top: 50%;
+    transform: translateY(-44%);
+    margin: 0 auto;
 }
 
 #background_canvas {
@@ -125,13 +138,12 @@ canvas{
 
 .game_over{
     position: absolute;
-    top: 400px;
-    left: 630px;
-    cursor:default;
-    display: none;
-    font-family: Courier;
-    font-size: 45px;
-
+    top: 51%;
+    transform: translateY(44%) translateX(-30%);
+    left: 45%;
+    font-family: 'Press Start 2P';
+    font-size: 35px;
+    text-align: center;
 }
 
 .game_over span{
@@ -143,10 +155,3 @@ canvas{
 .game_over span:hover {
     color: red;
 }
-
-
-/*#link_canvas {
-    position: absolute;
-    z-index: 2
-}
-*/

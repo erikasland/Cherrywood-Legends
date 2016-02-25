@@ -1,9 +1,12 @@
 
 <div id="game" ng-controller="battleController">
-    <audio src="./../static/jackchandler.mp3" autoplay></audio>
-    <!--     <body onload = 'init()'> -->        
-    <canvas id="background" width="2000" height="960"></canvas>
-    <canvas id="tower_canvas" width="2000" height="960"></canvas>
-    <div id = "game_over" class = "game_over"> Game Over<p><span onclick="restart(); battleController.updateAndShow(battleController.current_user)">Restart</span></p></div>
+    <!-- <audio src="./../static/jackchandler.mp3" autoplay></audio> -->
+    <!--     <body onload = 'init()'> -->       
+    <canvas id="background" width="1200" height="800"></canvas>
+    <canvas id="tower_canvas" width="1200" height="800"></canvas>
+    <div id = "game_over" class = "game_over">
+        <h2>Game Over</h2>
+        <p><span onclick="restart(); battleController.updateAndShow(battleController.current_user)">Restart</span></p>
+    </div>
 </div>
 
