@@ -6,23 +6,70 @@ html {
   background-size: cover;
 }
 
+/*html, body, #viewdiv{
+    min-height: 100%;
+}*/
+
 #title{
     font-family: 'Alex Brush';
-    font-size: 8em;
-    margin: .5em 0 0 1em;
+    font-size: 5.5em;
+    padding: .25em 0 0 .5em;
 }
 
-#start, #enter_name{
+#start{
     font-family: 'Press Start 2P';
-    text-align: center;
-    margin: 10em 0;
+    position: absolute;
+    left: 28%;
+    top: 51%;
 }
 
 #viewdiv{
+    position: absolute;
+    bottom: 3em;
     width: 100%;
+    height: 100%;
 }
 
-#mog{
+#castle-div, #start-link-div{
+    display: inline-block; vertical-align: top;
+}
+
+#start-link-div{
+    width: 65%;
+    height: 100%;
+}
+
+#castle-div{
+    width: 34%;
+    height: 100%;
+}
+
+#stan{
+    z-index: 1;
+}
+
+#castle{
+    width: 25em;
+    height: 36em;
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+}
+
+#link{
+    width: 7em;
+    height: 7em;
+    position: absolute;
+    bottom: -2em;
+    left: 10em;
+}
+
+#hideme{
+    z-index: -1;
+}
+
+
+/*#mog{
     width: 1.5em;
     height: 1.5em;
     position: absolute;
@@ -53,23 +100,10 @@ html {
     bottom: 6.2%;
     left: -5%;
 }
-
-#castle{
-    width: 25em;
-    height: 50em;
-    position: absolute;
-    left: 90em;
-    bottom: 3em;
+*/
+#landing-wrapper{
+    width: 100%;
 }
-
-#link{
-    width: 7em;
-    height: 7em;
-    position: absolute;
-    bottom: 1.8em;
-    left: 10em;
-}
-
 span{
     font-family: 'Press Start 2P';
     font-size: 1em;
@@ -108,13 +142,6 @@ input{
     text-align: center;
     position: absolute;
     top: 22em;
-}
-
-#hideme{
-    position: relative;
-    top:0;
-    left: 130em;
-    z-index: -1;
 }
 
 /*.castle{
