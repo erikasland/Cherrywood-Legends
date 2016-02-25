@@ -11,8 +11,8 @@ function init() {
 
     var game_over = false;
 
-    tower_ctx.clearRect(0, 0, 2000, 960);
-    background_ctx.clearRect(0, 0, 2000, 960);
+    tower_ctx.clearRect(0, 0, 1200, 800);
+    background_ctx.clearRect(0, 0, 1200, 800);
     document.getElementById('game_over').style.display = 'none'
 
 
@@ -28,7 +28,7 @@ function init() {
         background.onload = function() {
         var pattern = background_ctx.createPattern(background, 'no-repeat');
         background_ctx.fillStyle = pattern;
-        background_ctx.fillRect(0,0,2000,960);
+        background_ctx.fillRect(0,0,1200,800);
         callback();
         }
     }
@@ -41,7 +41,7 @@ function init() {
         background.onload = function() {
             var pattern = background_ctx.createPattern(background, 'no-repeat');
             background_ctx.fillStyle = pattern;
-            background_ctx.fillRect(0,0,2000,960);
+            background_ctx.fillRect(0,0,1200,800);
             
             //load the towers and character only after the background has loaded
             drawTower();
@@ -65,7 +65,7 @@ function init() {
         explosion_img.src = './../static/explosion.png';
 
         var constants = {
-            'EXPLODE_UP': [[0,0], [160,0], [320,0], [480,0], [0,160],[160,160],[320,160],[480,160]]
+            'EXPLODE_UP': [[0,0], [112.5,0], [225,0], [337.5, 0], [0,112.5],[112.5,112.5],[225,112.5],[337.5,112.5]]
         }
 
         var dx = 0;
@@ -92,7 +92,7 @@ function init() {
             if(explosionIndex < constants['EXPLODE_UP'].length){
                 sy = constants["EXPLODE_UP"][explosionIndex][1];
                 sx = constants["EXPLODE_UP"][explosionIndex][0];
-                tower_ctx.drawImage(explosion_img, sx, sy, 160, 160, destX, destY, 160, 160);
+                tower_ctx.drawImage(explosion_img, sx, sy, 112.5, 112.5, destX, destY, 112.5, 112.5);
                 explosionIndex++;
                 
             }
@@ -110,8 +110,8 @@ function init() {
                 type: 'tower',
                 x: 200,
                 y: 450,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -119,8 +119,8 @@ function init() {
                 type: 'tower',
                 x: 50,
                 y: 250,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -129,8 +129,8 @@ function init() {
                 type: 'tower',
                 x: 50,
                 y: 650,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -138,30 +138,30 @@ function init() {
             
         }, {
                 type: 'tower',
-                x: 1300,
+                x: 1050,
                 y: 650,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
               
         }, {
                 type: 'tower',
-                x: 1150,
+                x: 900,
                 y: 450,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
               
         }, {
                 type: 'tower',
-                x: 1300,
+                x: 1050,
                 y: 250,
-                w: 151,
-                h: 201,
+                w: 101,
+                h: 151,
                 hp: 2,
                 alive: true,
                 flag: false
@@ -177,7 +177,6 @@ function init() {
     function makeFlag(){
         var flag_index = Math.floor(Math.random()*6)
         towers[flag_index].flag = true;
-        
     }
 
     function drawTower(tower){
@@ -237,9 +236,7 @@ function init() {
                     }
                     game_over = true;
 
-                    drawCharacter(game_over);
-                    // jklfdajoifejaklfejaoifejalkfejaiojfeklajfeklajfeioa
-  
+                    drawCharacter(game_over);  
                 }
                 
             }
@@ -255,20 +252,18 @@ function init() {
         type: 'character',
         w: 35,
         h: 35,
-        x: 800,
-        y: 650,
+        x: 600,
+        y: 550,
         hp: 6,
         attack: 1
     }
 
     function drawCharacter(game_over) {
-        console.log(game_over);
         if(game_over == false){
             var character_img = new Image();
             character_img.onload = function() {
                 character_img_loaded()
             }
-
             character_img.src = './../static/linkage.png';
         }
 
@@ -289,18 +284,15 @@ function init() {
         //starting point x and y coordinates on the sprite sheet
         var sx = 0;
         var sy = 0;
-        var destX = 800;
-        var destY = 650; 
+        var destX = 600;
+        var destY = 550; 
         var count = 0;
         var action;
 
 
 
-       function character_img_loaded() {
-
-
-          background_ctx.drawImage(character_img, sx, sy,35,35,destX,destY,35,35);
-
+        function character_img_loaded() {
+            background_ctx.drawImage(character_img, sx, sy,35,35,destX,destY,35,35);
         }
 
 
@@ -353,8 +345,8 @@ function init() {
 
                 //Check for keypress to navigate linkage
                 $(document).on("keyup", function(e){
-                    var barrier_top = {x:0, y:0, w:2000, h:300}
-                    var barrier_bottom = {x:0, y:880, w:2000, h: 200}
+                    var barrier_top = {x:0, y:0, w:1200, h:120}
+                    var barrier_bottom = {x:0, y:880, w:1200, h: 200}
                     
                     if(e.which == 32){
 

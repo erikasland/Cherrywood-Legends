@@ -7,7 +7,6 @@ myModule.controller('battleController', function(userFactory, $scope){
     }
 
     var win = init();
-    console.log(game_over);
     var _this = this;
     this.current_user = userFactory.user1
 

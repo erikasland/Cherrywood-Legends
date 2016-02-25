@@ -1,5 +1,6 @@
 myModule.controller('indexController', function($location, $window, $document){
     // init();
+    this.focus = true;
     var _this = this;    
 
     var handler = function(e){
@@ -10,5 +11,4 @@ myModule.controller('indexController', function($location, $window, $document){
 
     this.docu = angular.element(document);
     this.docu.on('keydown', handler);
-    $document.on('keydown', handler);
 })
