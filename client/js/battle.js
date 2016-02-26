@@ -1,7 +1,6 @@
 myModule.controller('battleController', function(userFactory, $scope){
     init();
     $scope.get = function(){
-
         console.log("hi")
         console.log(game_over)
     }
